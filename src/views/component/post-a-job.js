@@ -1,83 +1,84 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-const PostAJob = () => {
-  const [formdata, setFormdata] = useState({
-    jobTitle: "",
-    email: "",
-    mobile: "",
-    vcancyFor: "",
-    jobDesc: "",
-  });
-  function submitFormData() {
-    setFormdata(
-      {
-        jobTitle: "job",
-        email: "eml",
-        mobile: "mob",
-        vcancyFor: "vacancy",
-        jobDesc: "jd",
-      },
-      () => {
-        console.log(JSON.stringify(formdata));
-      }
-    );
+function PostAJob(props) {
+  const [formData, setFormdata] = useState(props.formData);
+  const history = useHistory();
+
+  var handlerToUpdate = props.handler;
+  const submitFormData = () => {
+    // setFormdata({
+    //     jobTitle: "job",
+    //     email: "eml",
+    //     mobile: "mob",
+    //     vcancyFor: "vacancy",
+    //     jobDesc: "jd",
+    //   }
+    // );
+    handlerToUpdate(formData);
+    history.push("/job-description");
   }
+
   return (
     <div>
       <div className="card border-primary mb-3">
         <div className="card-header">Post A Job For Developers</div>
         <div className="card-body">
-          <form className="mb-5">
+          <div className="mb-5">
             <fieldset>
               {/* <legend>Post A Job For Developers</legend> */}
-              <div className="form-group">
-                <label htmlFor="txtJobTitle" className="form-label mt-4">
+              <div className="form-group row mb-2">
+                <label htmlFor="txtJobTitle" className="col-sm-2 col-form-label">
                   Job Title
                 </label>
-                <input
-                  type="text"
+                <div className="col-sm-10">
+                <input type="text"
                   className="form-control"
                   id="txtJobTitle"
                   placeholder="Enter Job Title"
-                />
-                <small id="emailHelp" className="form-text text-muted">
-                  Try to keep more than 10 and less than 200 characters.
-                </small>
+                  value={formData.jobTitle}
+                  onChange={e => setFormdata({ ...formData, jobTitle : e.target.value })} />
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail1" className="form-label mt-4">
+              <div className="form-group row mb-2">
+                <label htmlFor="exampleInputEmail1" className="col-sm-2 col-form-label">
                   Contact Eamil ID
                 </label>
+                <div className="col-sm-10">
                 <input
                   type="email"
                   className="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
+                  value={formData.email}
+                  onChange={e => setFormdata({ ...formData, email : e.target.value })}
                 />
-                <small id="emailHelp" className="form-text text-muted">
-                  We'll never share your email with anyone else.
-                </small>
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="txtMobNo" className="form-label mt-4">
+              <div className="form-group row mb-2">
+                <label htmlFor="txtMobNo" className="col-sm-2 col-form-label">
                   Contact Mobile Number
                 </label>
+                <div className="col-sm-10">
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   id="txtMobNo"
-                  placeholder="Enter Job Title"
+                  placeholder="Enter Mobile Number"
+                  value={formData.mobile}
+                  onChange={e => setFormdata({ ...formData, mobile : e.target.value })}
                 />
-                <small id="emailHelp" className="form-text text-muted">
-                  Try to keep more than 10 and less than 200 characters.
-                </small>
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="exampleSelect1" className="form-label mt-4">
+              <div className="form-group row mb-2">
+                <label htmlFor="exampleSelect1" className="col-sm-2 col-form-label">
                   Select Vacancy For
                 </label>
-                <select className="form-select" id="exampleSelect1">
+                <div className="col-sm-10">
+                <select className="form-select"
+                defaultValue={formData.vcancyFor}
+                onChange={e => setFormdata({ ...formData, vcancyFor : e.target.value })}>
                   <option value="">Select Vacancy For</option>
                   <option value="java">Java Developer</option>
                   <option value="dotnet">.Net Developer</option>
@@ -89,26 +90,21 @@ const PostAJob = () => {
                   <option value="bda">Big Database Administrator</option>
                   <option valud="front">Font End Developer</option>
                 </select>
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="exampleTextarea" className="form-label mt-4">
-                  Job Discription
+              <div className="form-group mb-2">
+                <label htmlFor="exampleTextarea" className="col-sm-2 col-form-label">
+                  Job Description
                 </label>
                 <textarea
-                  className="form-control"
-                  id="exampleTextarea"
-                  rows="3"
-                ></textarea>
+                  className="form-control" rows="3" defaultValue={formData.jobDesc}
+                  onChange={e => setFormdata({ ...formData, jobDesc : e.target.value })}></textarea>
               </div>
-              <button
-                type="button"
-                className="btn btn-primary mt-4"
-                onClick={submitFormData}
-              >
+              <button type="button" className="btn btn-success mt-4" onClick={submitFormData}>
                 Submit
               </button>
             </fieldset>
-          </form>
+          </div>
         </div>
       </div>
     </div>

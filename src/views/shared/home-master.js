@@ -33,13 +33,9 @@ const HomeMaster = ({ children }) => {
                 <span className="visually-hidden">(current)</span>
               </a>
             </li>
-            {/* <li className="nav-item">
-                <a className="nav-link" href="/job-list">
-                  Job List
-                </a>
-              </li> */}
+            {/* <li className="nav-item"><a className="nav-link" href="/job-list">Job List</a></li> */}
             <li className="nav-item">
-              <a className="nav-link" href="/#/post-a-job">
+              <a className="nav-link" href="/post-a-job">
                 Post A Job
               </a>
             </li>
